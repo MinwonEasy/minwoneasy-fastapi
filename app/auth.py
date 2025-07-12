@@ -185,19 +185,22 @@ async def logout(request: Request):
             + urlencode(
                 {
                     "id_token_hint": id_token,
-                    "post_logout_redirect_uri": settings.BASE_URL + "/",
+                    "post_logout_redirect_uri": settings.BASE_URL + "/api/logged-out",
                 }
             )
         )
         print(f"[DEBUG] Redirecting to Keycloak logout: {logout_url}")
         response = RedirectResponse(logout_url)
     else:
-        response = RedirectResponse(settings.BASE_URL + "/")
+        response = RedirectResponse(settings.BASE_URL + "/api/logged-out")
 
     response.delete_cookie("minwon_session", path="/")
     response.delete_cookie("id_token")
     return response
 
+@router.get("/logged-out")
+async def logged_out():
+    return RedirectResponse(settings.BASE_URL + "/")
 
 # Extracts current user from session or bearer token
 async def get_current_user(request: Request):
