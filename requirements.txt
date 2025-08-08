@@ -10,3 +10,4 @@ pydantic-settings
 PyJWT
 pymysql
 psycopg2-binary
+pydantic

@@ -9,10 +9,18 @@ from database.mariadb_connection import (
 from database.postgresql_connection import (
     PostgreSQLSessionLocal,
 )
+Base = MariaDBBase
+engine = mariadb_engine
+SessionLocal = MariaDBSessionLocal
+from app.user.user_models import User
+from app.category.category_models import Category
+from app.department.department_models import Department
+from app.complaint.complaint_models import Complaint
+from app.file.file_models import File
+from app.ai_analysis.ai_models import AIAnalysis
+from app.user_token.token_models import UserToken
 
-# MariaDB 세션 의존성 주입
 def get_mariadb() -> Generator[Session, None, None]:
-    """MariaDB 세션 반환"""
     db = MariaDBSessionLocal()
     try:
         yield db
@@ -23,18 +31,6 @@ def get_mariadb() -> Generator[Session, None, None]:
         db.close()
 
 
-# PostgreSQL 세션 의존성 주입
-def get_postgresql() -> Generator[Session, None, None]:
-    """PostgreSQL 세션 반환"""
-    db = PostgreSQLSessionLocal()
-    try:
-        yield db
-    except Exception as e:
-        db.rollback()
-        raise e
-    finally:
-        db.close()
-
 
 def get_db() -> Generator[Session, None, None]:
     return get_mariadb()
@@ -44,8 +40,6 @@ def create_mariadb_tables():
     print("🗄️  Creating MariaDB tables...")
     MariaDBBase.metadata.create_all(bind=mariadb_engine)
     print("✅ MariaDB tables created successfully!")
-
-
 
 
 
