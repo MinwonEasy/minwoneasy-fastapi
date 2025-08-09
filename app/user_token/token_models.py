@@ -1,9 +1,9 @@
 from sqlalchemy import Column, BigInteger, Text, DateTime, String, ForeignKey
 from sqlalchemy.orm import relationship
-from app.common.base_model import BaseModel
+from database.mariadb_connection import MariaDBBase
 
 
-class UserToken(BaseModel):
+class UserToken(MariaDBBase):
     __tablename__ = "user_tokens"
 
     token_id = Column(BigInteger, primary_key=True, autoincrement=True)

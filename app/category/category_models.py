@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
-from app.common.base_model import BaseModel
+from database.mariadb_connection import MariaDBBase
 
 
-class Category(BaseModel):
+class Category(MariaDBBase):
     __tablename__ = "categories"
 
     category_id = Column(Integer, primary_key=True, autoincrement=True)

@@ -1,7 +1,7 @@
 from sqlalchemy import Column, BigInteger, Enum, JSON, DECIMAL, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from app.database import Base
+from database.mariadb_connection import MariaDBBase
 import enum
 
 
@@ -11,7 +11,7 @@ class AnalysisType(enum.Enum):
     OCR = "OCR"
 
 
-class AIAnalysis(Base):
+class AIAnalysis(MariaDBBase):
     __tablename__ = "ai_analysis"
 
     analysis_id = Column(BigInteger, primary_key=True, autoincrement=True)

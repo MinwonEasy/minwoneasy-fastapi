@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
-from app.common.base_model import BaseModel
+from database.mariadb_connection import MariaDBBase
 
 
-class Department(BaseModel):
+class Department(MariaDBBase):
     __tablename__ = "departments"
 
     department_id = Column(Integer, primary_key=True, autoincrement=True)

@@ -1,7 +1,8 @@
 from sqlalchemy import Column, BigInteger, String, Enum, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from app.database import Base
+from database.mariadb_connection import MariaDBBase
+from app.config import settings
 import enum
 
 
@@ -11,7 +12,7 @@ class FileType(enum.Enum):
     DOCUMENT = "DOCUMENT"
 
 
-class File(Base):
+class File(MariaDBBase):
     __tablename__ = "files"
 
     file_id = Column(BigInteger, primary_key=True, autoincrement=True)
@@ -30,4 +31,8 @@ class File(Base):
 
     @property
     def file_url(self) -> str:
-        return f"http://34.22.78.216:31112/{self.minio_bucket}/{self.minio_object_key}"
+        return f"{settings.minio_url}/{self.minio_bucket}/{self.minio_object_key}"
+
+    @property
+    def download_url(self) -> str:
+        return f"{settings.BASE_URL}/api/files/{self.file_id}/download"

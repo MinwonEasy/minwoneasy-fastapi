@@ -1,8 +1,7 @@
 from sqlalchemy import Column, BigInteger, Enum, Text, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship
-from app.common.base_model import BaseModel
 import enum
-
+from app.common.base_model import BaseModel
 
 class SubmissionType(enum.Enum):
     TEXT = "TEXT"

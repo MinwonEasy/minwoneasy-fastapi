@@ -1,9 +1,9 @@
 from sqlalchemy import Column, String, DateTime, BigInteger
 from sqlalchemy.orm import relationship
-from app.common.base_model import BaseModel
+from database.mariadb_connection import MariaDBBase
 
 
-class User(BaseModel):
+class User(MariaDBBase):
     __tablename__ = "users"
 
     user_id = Column(BigInteger, primary_key=True, autoincrement=True)

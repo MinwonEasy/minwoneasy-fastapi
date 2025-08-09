@@ -11,3 +11,5 @@ PyJWT
 pymysql
 psycopg2-binary
 pydantic
+cryptography
+sqlalchemy
