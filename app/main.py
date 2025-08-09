@@ -15,7 +15,7 @@ MariaDBBase.metadata.create_all(bind=mariadb_engine)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-   #  app.state.oauth = await init_oauth()
+    app.state.oauth = await init_oauth()
     yield
 
 
