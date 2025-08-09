@@ -9,10 +9,13 @@ from app.config import settings
 from urllib.parse import quote
 from contextlib import asynccontextmanager
 from fastapi.openapi.utils import get_openapi
+from app.database import MariaDBBase, mariadb_engine
+
+MariaDBBase.metadata.create_all(bind=mariadb_engine)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    app.state.oauth = await init_oauth()
+   #  app.state.oauth = await init_oauth()
     yield
 
 
