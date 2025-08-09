@@ -8,3 +8,8 @@ itsdangerous
 python-multipart
 pydantic-settings
 PyJWT
+pymysql
+psycopg2-binary
+pydantic
+cryptography
+sqlalchemy
