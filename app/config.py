@@ -1,7 +1,7 @@
-# app/config.py
 from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
 from pathlib import Path
+from cryptography.fernet import Fernet
 
 load_dotenv()
 
@@ -30,6 +30,7 @@ class Settings(BaseSettings):
     POSTGRES_DATABASE: str
     MINIO_ENDPOINT: str
     MINIO_SECURE: bool = False
+    TOKEN_ENCRYPTION_KEY: str = ""
 
     class Config:
         env_file = ENV_PATH
@@ -43,6 +44,12 @@ class Settings(BaseSettings):
     @property
     def mariadb_url(self) -> str:
         return f'mysql+pymysql://{self.MARIADB_USER}:{self.MARIADB_PASSWORD}@{self.MARIADB_HOST}:{self.MARIADB_PORT}/{self.MARIADB_DATABASE}?charset=utf8mb4'
+
+    @property
+    def encryption_key(self) -> bytes:
+        if not self.TOKEN_ENCRYPTION_KEY:
+            raise ValueError("TOKEN_ENCRYPTION_KEY must be set in environment variables")
+        return self.TOKEN_ENCRYPTION_KEY.encode()
 
 
 settings = Settings()
