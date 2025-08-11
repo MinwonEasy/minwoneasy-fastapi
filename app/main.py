@@ -1,10 +1,9 @@
-# app/main.py
 from fastapi import FastAPI, Request
 from fastapi.responses import RedirectResponse
 from starlette.middleware.sessions import SessionMiddleware
-#from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 from app.auth import router as auth_router, init_oauth, ReauthRequired
-#from app.routes import 
+from app.routers.agentica import router as agentica_router
 from app.config import settings
 from urllib.parse import quote
 from contextlib import asynccontextmanager
@@ -28,7 +27,7 @@ async def reauth_redirect_handler(request: Request, exc: ReauthRequired):
 
 # app.add_middleware(
 #     CORSMiddleware,
-#     allow_origins=settings.FRONTEND_URL,
+#     allow_origins=["*"], - 프론트
 #     allow_credentials=True,
 #     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 #     allow_headers=["*"],
@@ -43,7 +42,7 @@ app.add_middleware(
 )
 
 app.include_router(auth_router, prefix="/api", tags=["auth"])
-
+app.include_router(agentica_router, prefix="/api/ai", tags=["AI Services"])
 
 
 def custom_openapi():
@@ -51,9 +50,9 @@ def custom_openapi():
         return app.openapi_schema
 
     openapi_schema = get_openapi(
-        title="Minwoneasy API",
-        version="1.0.0",
-        description="API docs for Minwoneasy",
+        title="Minwoneasy AI System",
+        version="2.0.0",
+        description="Ai Minwoneasy ",
         routes=app.routes,
     )
     openapi_schema["components"]["securitySchemes"] = {
