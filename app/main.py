@@ -9,9 +9,10 @@ from app.config import settings
 from urllib.parse import quote
 from contextlib import asynccontextmanager
 from fastapi.openapi.utils import get_openapi
-from app.database import MariaDBBase, mariadb_engine
+from app.routes import complaints_router, files_router, categories_router, departments_router
 
-MariaDBBase.metadata.create_all(bind=mariadb_engine)
+# from app.database import MariaDBBase, mariadb_engine
+# MariaDBBase.metadata.create_all(bind=mariadb_engine)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -43,8 +44,10 @@ app.add_middleware(
 )
 
 app.include_router(auth_router, prefix="/api", tags=["auth"])
-
-
+app.include_router(complaints_router, prefix="/api/complaints", tags=["complaint"])
+app.include_router(files_router, prefix="/api/files", tags=["file"])
+app.include_router(categories_router,  prefix="/api/categories",  tags=["category"])
+app.include_router(departments_router, prefix="/api/departments", tags=["department"])
 
 def custom_openapi():
     if app.openapi_schema:
