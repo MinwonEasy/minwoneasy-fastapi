@@ -30,6 +30,10 @@ class Settings(BaseSettings):
     POSTGRES_DATABASE: str
     MINIO_ENDPOINT: str
     MINIO_SECURE: bool = False
+    MINIO_ACCESS_KEY: str            
+    MINIO_SECRET_KEY: str            
+    MINIO_BUCKET: str = "minwon"
+
     TOKEN_ENCRYPTION_KEY: str = ""
 
     class Config:
